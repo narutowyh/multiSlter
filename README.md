@@ -4,18 +4,18 @@
 ## 依赖
 1. [Zepto](http://zeptojs.com/)
 2. [iscroll](https://github.com/cubiq/iscroll)
-## Getting started
-## Initialization
-## options
-### options.cancleTip
+
+## Initialization  
+## options  
+### options.cancleTip  
 li顶层的文案
-### options.separator
+### options.separator  
 分隔符
-### options.sltedClassName
+### options.sltedClassName  
 被选中的li节点的class name
-### options.openSlter
+### options.openSlter  
 用于打开组件的css选择器
-### options.datas
+### options.datas  
 用于生成option的数组，格式：
 
 ```
@@ -42,18 +42,18 @@ li顶层的文案
   }]
 ]
 ```
-### options.liTapCallback
+### options.liTapCallback  
 liTapCallback( selectedLi, thisScroller, multiSlterObj )  
 点击li节点的回调  
 `@selectedLi `: 被点击的li节点的引用  
 `@thisScroller `: 点击的li所在的scroller对象的引用  
 `@multiSlterObj `: 整个组件对象的引用
-### options.cancleCallback
+### options.cancleCallback  
 cancleCallback( sltedNodeAry, multiSlterObj )   
 点击取消的回调
 `@sltedNodeAry`: 被选中的li节点组成的数组  
 `@multiSlterObj`:整个组件对象的引用  
-### options.confirmCallback
+### options.confirmCallback  
 confirmCallback( sltedNodeAry, multiSlterObj )   
 点击成功的回调  
 参数同上
