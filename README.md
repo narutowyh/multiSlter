@@ -1,6 +1,7 @@
 # 模拟select的选择器
 ## demos:
-[demo](https://github.com/narutowyh/multiSlter/tree/master/demos)
+[demo](https://github.com/narutowyh/multiSlter/tree/master/demos)  
+![demo](demo.png)
 ## 依赖
 1. [Zepto](http://zeptojs.com/)
 2. [iscroll](https://github.com/cubiq/iscroll)
