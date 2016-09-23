@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui">
+    <title>MultiSlter.js-demo</title>
     <link rel="stylesheet" href="demo.css">
     <link rel="stylesheet" href="../multiSlter.css">
     <script src="zepto.js"></script>
@@ -11,31 +12,78 @@
 </head>
 <body>
 <section class="content">
-<div class="demo">
-    <h4>separator : " "</h4>
-    <span class="multislter-holder" id="separatorEmpty">请选择您的户型</span>
-</div>
-<div class="demo">
-    <h4>separator : "-"</h4>
-    <span class="multislter-holder" id="separatorS">请选择您的户型</span>
-</div>
-<div class="demo">
-    <h4>sltedClassName : "cur"</h4>
-    <span class="multislter-holder" id="sltedClassName">请选择您的户型</span>
-</div>
-<div class="demo">
-    <h4>cancleTip : "-取消-"</h4>
-    <span class="multislter-holder" id="cancleTip">请选择您的户型</span>
-</div>
-<div class="demo">
-    <h4>licallback : "alert"(禁止掉浏览器的alert看不到demo)</h4>
-    <span class="multislter-holder" id="licallback">请选择您的户型</span>
-</div>
-<div class="demo">
-    <h4>callbacks : "点击确认、取消的回调"(禁止掉浏览器的alert看不到demo)</h4>
-    <span class="multislter-holder" id="callbacks">请选择您的户型</span>
-</div>
+    <div class="demo">
+        <h2>simple</h2>
+        <div>
+            <span id="simple" data-holder="请选择日期">1900年-11月-11日</span>
+        </div>
+    </div>
 
+    <div class="demo">
+        <h2>separator</h2>
+        <div>
+            <span class="multislter-holder" id="separator">请选择日期</span>
+        </div>
+        <div>
+            <span class="multislter-holder" id="separator2">请选择日期</span>
+        </div>
+    </div>
+
+    <div class="demo demo-sltedClassName">
+        <h2>sltedClassName</h2>
+        <div>
+            <span id="sltedClassName">1988年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>cancleTip</h2>
+        <div>
+            <span class="multislter-holder" id="cancleTip">请选择日期</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>slideDownInterval</h2>
+        <div>
+            <span id="slideDownInterval">1919年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>autoScrollInterval</h2>
+        <div>
+            <span id="autoScrollInterval">1919年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>cancleCallback <sub>(click "取消")</sub></h2>
+        <div>
+            <span id="cancleCallback">1919年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>confirmCallback <sub>(change selects and click "确定", and you won't got what you has chosen in the @openSlter node')</sub></h2>
+        <div>
+            <span id="confirmCallback">1919年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>liTapCallback <sub>(now you cannot tap li nodes, because I do return false in the `liTapCallback`')</sub></h2>
+        <div>
+            <span id="liTapCallback">1919年-2月-14日</span>
+        </div>
+    </div>
+
+    <div class="demo">
+        <h2>placeholder</h2>
+        <div>
+            <span class="multislter-holder" id="placeholder">~请选择日期~</span>
+        </div>
+    </div>
 </section>
 <script src="demo.js"></script>
 </body>

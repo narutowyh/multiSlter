@@ -1,101 +1,136 @@
-;(function($) {
-  demoClass = function(op) {
-    this.defaults = {};
-    this.ops = $.extend({},this.defaults,op);
-    this.nodes = {};
-    this.init();
-  }
+demoClass = function(op) {
+    this._init();
+}
 
-  demoClass.prototype.init = function() {
-    var self = this;
-    self.initSlters();
-  }
+demoClass.prototype._init = function() {
 
-  demoClass.prototype.initSlters = function() {
-    var self = this;
-
-    // separator可配置
+    // simple
     new MultiSlter({
-        openSlter : "#separatorEmpty",
-        separator : " ",
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-            window.console && console.log( sltedNodeAry, multiSlterObj );
-        }
+        openSlter : "#simple",
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
     });
+
+    // separator
     new MultiSlter({
-        openSlter : "#separatorS",
-        separator : "-",
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-            window.console && console.log( sltedNodeAry, multiSlterObj );
-        }
+        openSlter : "#separator",
+        datas : [
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
     });
+
+    new MultiSlter({
+        openSlter : "#separator2",
+        separator : "/",
+        datas : [
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
+    });
+
+    // sltedClassName
     new MultiSlter({
         openSlter : "#sltedClassName",
-        separator : "-",
         sltedClassName : "cur",
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-            window.console && console.log( sltedNodeAry, multiSlterObj );
-        }
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
     });
+
+
+    // cancleTip
     new MultiSlter({
         openSlter : "#cancleTip",
-        separator : "-",
-        cancleTip : "-取消-",
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-            window.console && console.log( sltedNodeAry, multiSlterObj );
-        }
+        cancleTip : "？取消？",
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
     });
+
+    // slideDownInterval
     new MultiSlter({
-        openSlter : "#licallback",
-        separator : "-",
-        cancleTip : "--",
-        liTapCallback : function( selectedLi, thisScroller, multiSlterObj ) {
-          window.console && console.log( selectedLi, thisScroller, multiSlterObj );
-          alert("liTapCallback demo");
-        },
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-            window.console && console.log( sltedNodeAry, multiSlterObj );
-        }
+        openSlter : "#slideDownInterval",
+        slideDownInterval : 500,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
     });
+
+    // autoScrollInterval
     new MultiSlter({
-        openSlter : "#callbacks",
-        separator : "-",
-        cancleTip : "--",
-        cancleCallback : function( sltedNodeAry, multiSlterObj ) {
-          window.console && console.log( sltedNodeAry, multiSlterObj );
-          alert("取消");
-        },
-        datas : [self.getSlterData(1, 9, "", "室"), self.getSlterData(1, 9, "", "厅"), self.getSlterData(1, 9, "", "卫")],
-        confirmCallback : function( sltedNodeAry, multiSlterObj ) {
-          window.console && console.log( sltedNodeAry, multiSlterObj );
-            alert("确认");
+        openSlter : "#autoScrollInterval",
+        autoScrollInterval : 3000,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
+    });
+
+    // cancleCallback
+    new MultiSlter({
+        openSlter : "#cancleCallback",
+        autoScrollInterval : 3000,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ],
+        cancleCallback : function(sltedLiAry, slterObj) {
+            alert("cancled!");
         }
     });
 
-  }
+    // confirmCallback
+    new MultiSlter({
+        openSlter : "#confirmCallback",
+        autoScrollInterval : 1000,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ],
+        confirmCallback : function(sltedLiAry, slterObj) {
+            return {
+                autoInster : false,
+                autoHide : true
+            }
+        }
+    });
 
-  demoClass.prototype.getSlterData = function(from, to, pre, after) {
-      var r = [];
-      for (var i = from; i <= to; ++i) {
-          r.push({
-              htmlData : (pre || "") + i + (after || ""),
-              value : i
-          });
-      }
-      return r;
-  }
-})(Zepto);
+    // liTapCallback
+    new MultiSlter({
+        openSlter : "#liTapCallback",
+        autoScrollInterval : 1000,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ],
+        liTapCallback : function(thisLiNode, ulItem, sltedAry, scroller, allScrollers) {
+            return false;
+        }
+    });
 
+    // placeholder
+    new MultiSlter({
+        openSlter : "#placeholder",
+        autoScrollInterval : 1000,
+        datas : [
+            MultiSlter.getSlterData(1900, 2020, "", "年"),
+            MultiSlter.getSlterData(1, 12, "", "月"),
+            MultiSlter.getSlterData(1, 28, "", "日"),
+        ]
+    });
 
-
-
-
-
-
-
-
+}

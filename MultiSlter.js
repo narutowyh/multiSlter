@@ -1,18 +1,12 @@
-/**
-* 可扩展的selecter模拟组件，基于IScroll
-* 文档：
-* created by yaohuiwang@anjuke.com 16-08-23
-*/
-window.MultiSlter = window.MultiSlter || {};
-;(function($, ns) {
-    ns.MultiSlter = function(op) {
+;(function($) {
+    var _MultiSlter = function(op) {
         this.defaults = {
-            autoScrollInterval : 500,  // 打开后自动滚动动画的时长
-            slideDownInterval : 0,     // 组件隐藏时slide down的时长，ms
-            datas          : null,       // * 用于初始化组件的数据，格式参见文档
-            cancleTip      : "请选择",    // 取消选择的文案，顶端li节点的文案
-            separator      : "-",        // 多个selector的字段用什么分割
-            sltedClassName : "selected"  // 选中的li节点的className
+            autoScrollInterval : 500,        // 打开控件后自动滚动到选中元素的动画时长
+            slideDownInterval  : 0,          // 组件隐藏时slide down的时长，ms
+            datas              : null,       // * 用于初始化组件的数据
+            cancleTip          : "请选择",    // 取消选择的文案，即顶端li节点的文案
+            separator          : "-",        // 多个selector字段用什么分割
+            sltedClassName     : "selected"  // 选中的li节点的className
         };
         this.ops = $.extend({}, this.defaults, op);
         this.nodes = {
@@ -24,16 +18,16 @@ window.MultiSlter = window.MultiSlter || {};
         };
         this.scrollObj = []; // 存放scroller对象的数组
         this.sltedAry = null;
-        this.init();
+        this.innerHeight = window.innerHeight;
+        this._init();
     }
 
-    ns.MultiSlter.prototype.init = function() {
-        var self = this;
-        self.initScrollItems();
-        self.bindEvent();
+    _MultiSlter.prototype._init = function() {
+        this._initScrollItems();
+        this._bindEvent();
     }
 
-    ns.MultiSlter.prototype.bindEvent = function() {
+    _MultiSlter.prototype._bindEvent = function() {
         var self = this;
 
         // 组件打开时禁用系统原生滚动
@@ -90,7 +84,7 @@ window.MultiSlter = window.MultiSlter || {};
     }
 
     // 将 @self.ops.datas 中的数据拼成ul节点，插入到@#multiSlterMask中
-    ns.MultiSlter.prototype.initScrollItems = function() {
+    _MultiSlter.prototype._initScrollItems = function() {
         var self = this;
 
         // @openNode没有“data-holder”时将其html设为holder
@@ -141,9 +135,22 @@ window.MultiSlter = window.MultiSlter || {};
     }
 
     // 显示组件
-    ns.MultiSlter.prototype.show = function() {
+    _MultiSlter.prototype.show = function() {
         var self = this;
         self.nodes.multiSlterMask.removeClass("none");
+        if (navigator.userAgent.indexOf("Safari") === -1) { // 一定不是safari，不存在遮挡问题
+            ;
+        } else { // safari一定有，但是某些webview也有（存在高度无法计算问题），
+            ;
+            // 为了兼容iOS safari底栏遮挡，需手动设置mask层的高度为window.innerHeight
+            self.nodes.multiSlterMask[0].style.height = window.innerHeight + "px";
+
+            // 有键盘弹出时为真
+            if ( window.innerHeight < self.innerHeight ) {
+                self.nodes.multiSlterMask[0].style.height = self.innerHeight + "px";
+            }
+        }
+
 
         // 初始化scroll，初始化时被scroll的节点需可见，所以延迟执行
         setTimeout(function() {
@@ -152,7 +159,7 @@ window.MultiSlter = window.MultiSlter || {};
             // 根据ul的内容初始化各个scroller
             $.each( self.nodes.multislterItem.find("ul"), function(k, ulItem) {
                 if (+$(ulItem).data("scrolled") !== 1) { // 在ul节点上添加标记，让scroller只初始化一次
-                    var firstLiNode = $('<li></li>').html(self.ops.cancleTip);
+                    var firstLiNode = $('<li data-value="-1"></li>').html(self.ops.cancleTip);
                     $(ulItem).append('<li class="last"></li>').prepend(firstLiNode);
                     self.scrollObj[k] = new IScroll($(ulItem).parent()[0], { // 初始化并保存一个scroll
                         tap : true
@@ -180,13 +187,17 @@ window.MultiSlter = window.MultiSlter || {};
                 if ( initHtml !== self.ops.cancleTip ) {
                     self.sltersGoTo( initHtml.split(self.ops.separator) );
                 }
+
             } );
+
+            // onshow
+            self.ops.showCallback && self.ops.showCallback(self);
             self.preventTouchmove = true;
         }, 10);
     }
 
     // 隐藏组件
-    ns.MultiSlter.prototype.hide = function() {
+    _MultiSlter.prototype.hide = function() {
         var self = this;
         self.nodes.multislterItem.addClass("slter-hide");
         setTimeout(function() {
@@ -202,7 +213,7 @@ window.MultiSlter = window.MultiSlter || {};
     }
 
     // @ary为数组，包含n个selecter要被滚动到的位置
-    ns.MultiSlter.prototype.sltersGoTo = function(ary) {
+    _MultiSlter.prototype.sltersGoTo = function(ary) {
         var self = this;
         var sltedAry = ary;
         var isNode = false;
@@ -229,17 +240,7 @@ window.MultiSlter = window.MultiSlter || {};
         } );
     }
 
-    // 将@nameAry节点的value设置为@sltedLiAry对应的值
-    window.MultiSlter.setSltedIptVal = function(nameAry, sltedLiAry) {
-        var len = nameAry.length;
-        if ( !$.isArray(nameAry) ) {
-            sltedLiAry[0] && ( $("[name=" + nameAry + "]").val( sltedLiAry[0].dataset.value || "" ) );
-        } else {
-            for (var i = 0, len = nameAry.length; i < len; ++i) {
-                sltedLiAry[i] && ( $("[name=" + nameAry[i] + "]").val( sltedLiAry[i].dataset.value || "" ) );
-            }
-        }
-    }
+    window.MultiSlter = _MultiSlter;
 
     // 生成slter的数组数据
     window.MultiSlter.getSlterData = function(from, to, pre, after, subk, subv) {
@@ -257,4 +258,4 @@ window.MultiSlter = window.MultiSlter || {};
         return r;
     }
 
-})(Zepto, APF.Namespace.register("ajk.module"));
+})(Zepto);
