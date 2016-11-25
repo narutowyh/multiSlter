@@ -11,6 +11,9 @@ demoClass.prototype._init = function() {
             MultiSlter.getSlterData(1900, 2020, "", "年"),
             MultiSlter.getSlterData(1, 12, "", "月"),
             MultiSlter.getSlterData(1, 28, "", "日"),
+            MultiSlter.getSlterData(0, 24, "", "时"),
+            MultiSlter.getSlterData(0, 60, "", "分"),
+            MultiSlter.getSlterData(0, 60, "", "秒"),
         ]
     });
 
